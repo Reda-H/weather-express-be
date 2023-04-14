@@ -11,7 +11,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/search', async (req, res) => {
   let {input} = req.query;
-  let listOfReturnedCities = autocompleteMatch(input).sort((a, b) => {
+  let listOfReturnedCities = autocompleteMatch(input.toLowerCase()).sort((a, b) => {
       if (a.name.toUpperCase() < b.name.toUpperCase()) {
         return -1;
       }
@@ -45,7 +45,7 @@ function autocompleteMatch(input) {
 /* GET Weather Data */
 router.get('/weather', async (req, res) => {
   let { city } = req.query;
-  city = city.toLowerCase()
+  city = city.toLowerCase();
   const apiKey = process.env.SECRET_KEY;
   const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`;
   let data = null;
